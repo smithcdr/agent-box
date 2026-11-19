@@ -31,7 +31,13 @@ for full_name in "${repos[@]}"; do
       echo "  FAILED $full_name (check gh auth / repo visibility)"
     fi
   else
-    echo "  already present: $full_name"
+    # Refresh an existing clone so the agent doesn't work stale. --ff-only refuses to disturb
+    # uncommitted work or divergent history, so it fails safely instead of clobbering anything.
+    if su - "$AGENT_USER" -c "git -C '$REPOS_DIR/$name' pull --ff-only -q"; then
+      echo "  refreshed $full_name"
+    else
+      echo "  (skip: refresh blocked for $full_name — uncommitted work or divergent history)"
+    fi
   fi
 done
 
