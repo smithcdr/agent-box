@@ -82,10 +82,15 @@ sudo cloudflared service install --token ...
 
 ## Phone
 
-1. Install the **OpenCode** app (Google Play / iOS TestFlight).
-2. Add a connection: server URL `https://<box>.<tailnet>.ts.net` (Tailscale) — or your Access-protected URL —
-   username `opencode`, password = your `OPENCODE_PASSWORD`.
-3. Pick the model you use locally once (the app's AI settings, or `/models`) — defaults to
+No third-party app is required — the OpenCode server serves a web UI that works in your phone's browser.
+**Do not install random "OpenCode" apps from the App Store** (look-alikes exist and are not this project).
+On iPhone, the *official* app is a TestFlight beta reachable only from the official site (opencode.ai/mobile);
+everyone else is either a community client or an impostor. Easiest and safest: use the browser.
+
+1. Open `https://<box>.<tailnet>.ts.net` in your phone's browser — the OpenCode web UI. (Or use the official
+   TestFlight app if you want the native client.)
+2. Log in: username `opencode`, password = your `OPENCODE_PASSWORD`.
+3. Pick the model you use locally once (AI settings, or `/models`) — defaults to
    `openrouter/deepseek/deepseek-v4-flash-latest`.
 4. Message it. The box is awake 24/7, so it answers whenever.
 
