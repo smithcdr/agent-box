@@ -40,7 +40,7 @@ if [ ! -f "$SECRETS" ]; then
   echo "  no $SECRETS — skipping (run setup.sh first)"
   exit 0
 fi
-set -a; . "$SECRETS"; set +a   # brings in OPENROUTER_API_KEY, ENCRYPTION_KEY, BRAVE_API_KEY
+set -a; . "$SECRETS"; set +a   # brings in OPENROUTER_API_KEY, ENCRYPTION_KEY, SERPER_API_KEY
 # The real ENCRYPTION_KEY stays off the box: production ciphertext is never read here, and local dev
 # merely needs a key self-consistent with itself. So if none is supplied, use one throwaway key for the box.
 if [ -n "$ENCRYPTION_KEY" ]; then
@@ -55,7 +55,7 @@ for d in "$REPOS_DIR"/*/; do
   cat > "$d/.dev.vars" <<EOF
 OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
 ENCRYPTION_KEY=${LOCAL_KEY}
-BRAVE_API_KEY=${BRAVE_API_KEY:-}
+SERPER_API_KEY=${SERPER_API_KEY:-}
 EOF
   chown "$AGENT_USER:$AGENT_USER" "$d/.dev.vars"
   chmod 600 "$d/.dev.vars"
