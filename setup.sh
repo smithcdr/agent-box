@@ -56,8 +56,9 @@ if [ ! -f /etc/opencode/secrets.env ]; then
   cat > /etc/opencode/secrets.env <<'EOF'
 # Fill these in, then: sudo systemctl restart opencode-agent
 # OPENROUTER_API_KEY is required (https://openrouter.ai/settings/keys).
-# ENCRYPTION_KEY / BRAVE_API_KEY: same values as in the .dev.vars of your Cloudflare apps, if any.
-#   NOTE: losing ENCRYPTION_KEY makes encrypted chat/image history unreadable forever. Back it up.
+# ENCRYPTION_KEY: leave blank. Production data is never read on this box; if an app needs a key for
+#   local dev/tests, repos.sh generates a throwaway one automatically. Never put the production key here.
+# BRAVE_API_KEY: optional, only for exercising image search during dev.
 # CLOUDFLARE_API_TOKEN: optional, lets the agent run `wrangler deploy` (or use `wrangler login` instead).
 # OPENCODE_PASSWORD: fixed password for the OpenCode web UI / phone app (username is always `opencode`).
 OPENROUTER_API_KEY=

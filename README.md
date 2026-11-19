@@ -144,6 +144,8 @@ models of any consequence won't run. Pi = cheap agent; Mac/PC with 16+ GB = mode
 - `/etc/opencode/secrets.env` is `chmod 600` and holds your tokens. It is **not** in this repo.
 - The agent user has push access to everything in your GitHub account — that's the point, and also the risk surface:
   keep your GitHub account 2FA on and choose a strong `OPENCODE_PASSWORD`.
+- `ENCRYPTION_KEY` is never needed here: production ciphertext is never decrypted on the box. If an app needs
+  a key for local dev/tests, `repos.sh` generates a throwaway one per box automatically.
 
 ## Cost & limits
 
