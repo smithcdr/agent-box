@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenCode agent server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=__AGENT_USER__
+WorkingDirectory=__REPOS_DIR__
+EnvironmentFile=/etc/opencode/secrets.env
+ExecStart=/home/__AGENT_USER__/.opencode/bin/opencode serve --hostname 127.0.0.1 --port __PORT__
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
