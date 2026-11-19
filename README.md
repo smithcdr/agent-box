@@ -89,6 +89,43 @@ sudo cloudflared service install --token ...
    `openrouter/deepseek/deepseek-v4-flash-latest`.
 4. Message it. The box is awake 24/7, so it answers whenever.
 
+## Later: private local models (Mac mini, or any home box)
+
+The agent doesn't care where the model runs — OpenCode treats providers as config, and it has native
+Ollama support with automatic model discovery. So when you want privacy/cost on the model side, a
+32 GB Mac mini (or any 16+ GB machine) becomes a private model server and the VPS agent keeps on working:
+
+1. On the home box: install [Ollama](https://ollama.com), run it, and `ollama pull` a coder model
+   (`qwen2.5-coder:14b`, `llama3.1`, etc.).
+2. Join the home box to the same tailnet as the VPS (it's the same private network the phone already uses).
+3. Point the agent at it by adding one block to `/home/agent/.config/opencode/opencode.json`:
+
+   ```jsonc
+   {
+     "providers": {
+       "ollama": {
+         "settings": { "baseURL": "http://<mini-tailnet-ip>:11434/v1" }
+       }
+     }
+   }
+   ```
+
+   Pick the model in the phone app (`/models`) — it lists the models Ollama exposes automatically.
+   Keep OpenRouter configured, so the agent can fall back to the cloud for harder requests. That's it.
+
+Two ways to run it, depending on what you care about most:
+
+- **Availability-first (recommended):** keep the agent on the VPS, point it at home models. Best on-the-go reliability,
+  near-zero marginal LLM cost, everything stays under your control.
+- **Privacy-first:** host the agent *and* the models on the home box (OpenCode runs fine on macOS/Linux) and drop the
+  VPS. Sessions never leave your house. The trade-off is the agent goes dark when your home power/internet does.
+
+### Could a Raspberry Pi run this?
+
+As the **agent box**, yes: a Pi 5 (8 GB) runs OpenCode + your clones fine and sips power — the setup scripts target
+Debian-family Linux, so they mostly work on Raspberry Pi OS. As a **model host**, no: 8 GB total RAM and no GPU means
+models of any consequence won't run. Pi = cheap agent; Mac/PC with 16+ GB = models.
+
 ## Day-to-day
 
 | Task | Command (on the box) |
